@@ -18,7 +18,7 @@ do
     CGO_ENABLED=0 GOOS=${GOOS} GOARCH=${GOARCH} go build -ldflags "-w -s" -a -installsuffix cgo -o ${OUTPUT} ./cmd/${CMDNAME}.go
     # Write version
     echo "zip packing: ${CMDNAME}"
-    (cd ${BUILD_DIR} && rm -f main && cp ${CMDNAME} main && zip aws-lambda-${NAME}-${CMDNAME}-${GOOS}-${GOARCH}.zip main)
+    (cd ${BUILD_DIR} && rm -f main && cp ${CMDNAME} main && zip aws-lambda-${CMDNAME}-${GOOS}-${GOARCH}.zip main)
 done
 
 
