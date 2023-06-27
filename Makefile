@@ -1,6 +1,6 @@
 # Builds the project
 build:
-	./build.sh
+	./build-aws-lambda.sh
 
 install:
 	go install

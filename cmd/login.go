@@ -8,5 +8,5 @@ import (
 
 func main() {
     lambda.SetupEnv()
-    aws.StartWithOptions(handler.Login)
+    aws.StartWithOptions(lambda.UseCORS(handler.Login))
 }

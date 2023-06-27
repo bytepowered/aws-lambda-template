@@ -9,21 +9,26 @@ import (
 )
 
 func Login(ctx context.Context, req events.APIGatewayV2HTTPRequest) (*events.APIGatewayV2HTTPResponse, error) {
-    login := LoginUserVO{}
-    if err := lambda.ParseBody(req.Body, req.IsBase64Encoded, &login); err != nil {
+    args := LoginUserVO{}
+    if err := lambda.ParseBody(req.Body, req.IsBase64Encoded, &args); err != nil {
         log.Printf("ERROR: parse body failed: %s", err)
         return pkg.SendInvalidArgs()
     }
-    if !lambda.CheckNotEmpty(login.Email, login.Password) {
-        log.Printf("WARN: empty body: %s", login)
+    if !lambda.CheckNotEmpty(args.Email, args.Password) {
+        log.Printf("WARN: empty body: %s", args)
+        return pkg.SendInvalidArgs()
+    }
+    token, err := lambda.JWTSign(args.Email, "000001")
+    if err != nil {
+        log.Printf("ERROR: sign jwt error: %s", err)
         return pkg.SendInvalidArgs()
     }
     return lambda.SendOK(map[string]any{
         "action": "LOGIN",
-        "token":  "your-jwt-token",
+        "token":  token,
         "user": map[string]any{
-            "userid": 10000,
-            "email":  login.Email,
+            "userid": "000001",
+            "email":  args.Email,
         },
     })
 }
