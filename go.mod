@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/aws/aws-lambda-go v1.40.0
-	github.com/bytepowered/aws-lambda-sdk v0.0.9
+	github.com/bytepowered/aws-lambda-sdk v0.1.5
 )
 
 require (
